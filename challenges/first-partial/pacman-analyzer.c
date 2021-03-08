@@ -1,3 +1,7 @@
+//Ari Valenzuela (A01635584)
+//References: https://riptutorial.com/c/example/8274/get-lines-from-a-file-using-getline--
+//Used to learn how to use the get line function
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -75,7 +79,6 @@ void analizeLog(char *logFile, char *report) {
         return;
     }
 
-    //CODE FROM riptutorial
     char *line_buf = NULL;
     size_t line_buf_size = 0;
     int line_count = 0;
@@ -97,6 +100,8 @@ void analizeLog(char *logFile, char *report) {
 
     
     line_size=1;
+
+    //Part of code based from the reference of RIPTutorial to use the getline
     while(line_size>=0){
         line_count++;
         line_size = getline(&line_buf, &line_buf_size, openLog);
@@ -139,6 +144,7 @@ void analizeLog(char *logFile, char *report) {
                     
                     for(int i =0;i<indexPackages;i++){
                         if(strcmp(packagesList[i].name,package)==0){
+                            //When package already exists
                             flag = 1;
                             strcpy(packagesList[i].name,package);
                             strcpy(packagesList[i].installDate,date);
@@ -182,6 +188,7 @@ void analizeLog(char *logFile, char *report) {
                     package=getCertainString(line_buf,buffer_position,' ');
                     int flag = 0;
                     for(int i =0;i<indexPackages;i++){
+                        //When package already exists
                         if(strcmp(packagesList[i].name,package)==0){
                             flag=1;
                             strcpy(packagesList[i].installDate,date);
@@ -227,12 +234,12 @@ void analizeLog(char *logFile, char *report) {
 
     free(line_buf);
     line_buf = NULL;
-    //ENDCODE from rip tutorial
 
     
 
     fclose(openLog);
 
+    //Check to count the upgraded packages and the removed packages.
     for(int i =0;i<indexPackages;i++){
         if(packagesList[i].updates==0 && strcmp(packagesList[i].removalDate,"")==0){
             strcpy(packagesNotUpgraded[indexUpgrades].name,packagesList[i].name);
